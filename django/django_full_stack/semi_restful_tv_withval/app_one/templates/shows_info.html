@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance shows_info</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container si_con">
+        <div class="sn_test">
+            <h1>{{show.title}}</h1>
+            <a href="/shows">Go Back</a>
+        </div>
+        <p>ID: {{show.id}}</p>
+        <p>Network: {{show.network}}</p>
+        <p>Release Date: {{show.release_date | date:"M d, Y"}}</p>
+        <p>Description: {{show.description}}</p>
+        <p class="si_separator">Last Updated: {{show.updated_at}}</p>
+        <a href="/shows/{{show.id}}/edit">Edit</a>
+        <a href="/delete_show/{{show.id}}">Delete</a>
+        <form class="inline_form" action="/delete_show/{{show.id}}">
+            <input type="submit" value="DELETE">
+        </form>
+    </div>
+</body>
+</html>

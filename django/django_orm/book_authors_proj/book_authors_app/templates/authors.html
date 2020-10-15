@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance book_authors</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <form class="center" action="/">
+            <input type="submit" value="Go to Books">
+        </form>
+        <div class="inner">
+            <div class="col">
+                <h1>Add an Author:</h1>
+                <form action="/add_author" method="POST">
+                    {% csrf_token %}
+                    <label for="title">First Name:</label>
+                        <input type="text" name="f_n">
+                    <label for="desc">Last Name:</label>
+                        <input type="text-area" name="l_n" id="">
+                    <label for=""></label>
+                    <input class="bookbutt" type="submit" name="" id="">
+                </form>
+            </div>
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for author in authors %}
+                    <tr>
+                        <th>{{author.id}}</th>
+                        <th>{{author.first_name}} {{author.last_name}}</th>
+                        <th>
+                            <a href="/author_info/{{author.id}}">View</a>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

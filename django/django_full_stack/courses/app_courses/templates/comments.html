@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance courses</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+</head>
+<body>
+    <div class="container">
+        <h1>Course Comments:</h1>
+        <form action="/redirect/add_comment/{{course.id}}" method="POST">
+            {% csrf_token %}
+            <div class="inner1">
+                <label for="comment">Comment:</label>
+                <textarea name="comment" id="" cols="30" rows="10"></textarea>
+                <input class="i1_sub" type="submit">
+            </div>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Comment ID</th>
+                    <th>Comment</th>
+                    <th>Comment Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            {% for comment in comments %}
+            <tr>
+                <td>{{comment.id}}</td>
+                <td>{{comment.content}}</td>
+                <td>{{comment.created_at}}</td>
+                <td>
+                    <form action="/redirect/comments/destroy/{{comment.id}}/{{course.id}}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="remove">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

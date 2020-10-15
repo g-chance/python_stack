@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance GNG</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        /* body * {
+            outline: 1px solid black;
+        } */
+        .container {
+            text-align: center;
+        }
+        .cheat {
+            display: inline;
+        }
+        .poop {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Great number game!</h1>
+        <p>I am thinking of a number between 1 and 100.</p>
+        <p>Take a guess!</p>
+        {% if showme == True %}
+        <form class="cheat" action="/process" method="POST">
+            <label for="num">Enter a number:</label>
+            <input type="text" name="num">
+            <input type="submit">
+        </form>
+        <form class="cheat" action="/cheat" method="POST">
+        <input type="submit" value="Cheat">
+        </form>
+        {% endif %}
+        {% if session["cheat"] == True %}
+        <p class="cheat poop">{{session["randnum"]}}</p>
+        {% endif %}
+        <form action="reset" method="POST">
+            <input type="submit" value="Reset">
+        </form>
+        <p>{{result}}</p>
+    </div>
+</body>
+</html>

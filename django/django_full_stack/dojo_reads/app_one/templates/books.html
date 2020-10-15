@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h3>Welcome, {{user.first_name}}!</h3>
+            <div>
+                <a href="/books/add">Add Book and Review</a>
+                <a href="/rd/logout">Logout</a>
+            </div>
+        </nav>
+        <div class="inner1 inner1books">
+            <div class="col">
+                <h4>Recent Book Reviews:</h4>
+                {% for book in books %}
+                <div>
+                    <a href="/book_info/{{book.id}}">{{book.title}}</a>
+                    
+                    <p>Rating: {{book.reviews.last.rating}}</p>
+                    <p>
+                        <a href="/user_info/{{book.reviews.last.user.id}}">{{book.reviews.last.user.first_name}}</a> says: {{book.reviews.last.comment}}
+                    </p>
+                    <p>Posted on: {{book.reviews.last.created_at}}</p>
+                    
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col colrightbooks">
+                <h4>Other Books with Reviews:</h4>
+                {% for book in books %}
+                <p><a href="/book_info/{{book.id}}">{{book.title}}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

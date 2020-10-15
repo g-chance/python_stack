@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance courses</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add a new course:</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <p {%if message.tags%} class='{{message.tags}}' {%endif%}>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+        <form action="/redirect/add_course" method="POST">
+            {% csrf_token %}
+            <div class="inner1">
+                <label for="name">Name:</label>
+                <input type="text" name="name">
+                <label for="desc">Description:</label>
+                <textarea name="desc" id="" cols="30" rows="10"></textarea>
+                <input class="i1_sub" type="submit">
+            </div>
+        </form>
+
+        <h1>Courses:</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            {% for course in courses %}
+            <tr>
+                <td>{{course.id}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.description.content}}</td>
+                <td>{{course.created_at}}</td>
+                <td>
+                    <a href="/courses/destroy/{{course.id}}">remove</a>
+                    <a href="/courses/comment/{{course.id}}">comment</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

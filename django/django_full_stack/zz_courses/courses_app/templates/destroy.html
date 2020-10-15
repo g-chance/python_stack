@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance destroy</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Are you sure you want to remove this course?</h1>
+        <div class="inner1">
+            <h4>Couse ID:</h4>
+            <h4>{{course.id}}</h4>
+            <h4>Name:</h4>
+            <h4>{{course.name}}</h4>
+            <h4>Description:</h4>
+            <h4>{{course.desc}}</h4>
+        </div>
+        <form action="/destroy_course/{{course.id}}" method="POST">
+            <div class="inner1">
+            {% csrf_token %}
+            <button type="submit" formaction="/">NO</button>
+            <button type="submit" value="Yes" id="">YES</button>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

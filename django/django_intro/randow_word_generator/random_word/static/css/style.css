@@ -1,0 +1,25 @@
+/* body * {
+    outline: 1px solid black
+} */
+.container {
+    width: 1000px;
+    margin: auto;
+    text-align: center;
+}
+h1 {
+    width: fit-content;
+    text-align: center;
+    margin: auto;
+    border: 1px solid black;
+    padding: 10px;
+}
+h2 {
+    width: 400px;
+    min-height: 50px;
+    border: 1px solid black;
+    margin: 20px auto;
+    padding-top: 20px;
+}
+.blah {
+    padding: 40px;
+}

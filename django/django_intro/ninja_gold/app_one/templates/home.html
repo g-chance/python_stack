@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Ninja Gold!</h1>
+        <p class="centerform">How do you want to play?</p>
+        <form class="centerform" action="/play" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="huh?" value="turns">
+            <input type="submit" value="100 Gold in 5 Turns!">
+        </form>
+        <form class="centerform" action="/play" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="huh?" value="golds">
+            <input type="submit" value="Lose all your money!">
+        </form>
+    </div>
+</body>
+</html>

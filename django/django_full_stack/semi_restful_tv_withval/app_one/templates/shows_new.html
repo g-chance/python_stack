@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container sn_con">
+        <div class="sn_test">
+            <h1>Add a New Show:</h1>
+            <a href="/shows">Go Back</a>
+        </div>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form class="shows_new_form" action="/add_show" method="POST">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" name="title" value="{% if request.session.title %}{{request.session.title}}{% endif %}" >
+            <label for="network">Network:</label>
+            <input type="text" name="network" value="{% if request.session.network %}{{request.session.network}}{% endif %}" >
+            <label for="release_date">Release Date:</label>
+            <input type="date" name="release_date" value="{% if request.session.release_date %}{{request.session.release_date}}{% endif %}" >
+            <label for="description">Description:</label>
+            <textarea name="description" cols="30" rows="10">{% if request.session.description %}{{request.session.description}}{% endif %}</textarea>
+            <button class="snf_input" type="submit">Create</button>
+        </form>
+    </div>
+</body>
+</html>

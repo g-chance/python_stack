@@ -1,0 +1,90 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.container {
+    width: 50%;
+    margin: 20px auto;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.shows_table {
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.shows_table * {
+    border: 1px solid black;
+}
+
+.shows_link {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+}
+.shows_table_link {
+    text-decoration: none;
+    border: none;
+}
+.shows_new_form {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 20% 25%;
+    padding: 5px;
+}
+
+.shows_new_form input {
+    margin: 5px 0;
+}
+
+.snf_input {
+    display: block;
+    width: 50%;
+    margin: 20px 0 0 0;
+    padding: 5px;
+    box-shadow: 1px 1px 2px gray;
+}
+h1 {
+    font-family: fantasy;
+    border: 2px solid green;
+    width: fit-content;
+    padding: 5px;
+    box-shadow: 2px 2px 2px red;
+}
+.shows_con h1 {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 75% 0 0;
+}
+.sn_con h1 {
+    display: inline-block;
+    vertical-align: top;
+    /* margin: 0 64% 0 0; */
+}
+.sn_test {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.sn_test a {
+    text-align: right;
+}
+.si_con h1 {
+    display: inline-block;
+    vertical-align: top;
+}
+.si_con p {
+    margin: 20px 0;
+}
+.si_con .si_separator {
+    margin-top: 50px;
+}
+.gts {
+    display: block;
+    margin: 10px 0 0 10px;
+}
+.inline_form {
+    display: inline-block;
+}

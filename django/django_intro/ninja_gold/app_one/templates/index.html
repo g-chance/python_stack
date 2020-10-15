@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <p class="tg">Total Gold:</p>
+        <p class="tg" id="tgb">{{request.session.totalgold}}</p>
+        {% if request.session.win == None %}
+        <div class="container2">
+            <div class="col">
+                <h4>Farm</h4>
+                <p>(earns 10-20 gold)</p>
+                <form action="/process" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="whoami" id="" value="farm">
+                    <input type="submit" value="Find Gold">
+                </form>
+            </div>
+            <div class="col">
+                <h4>Cave</h4>
+                <p>(earns 5-10 gold)</p>
+                <form action="/process" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="whoami" id="" value="cave">
+                    <input type="submit" value="Find Gold">
+                </form>
+            </div>
+            <div class="col">
+                <h4>House</h4>
+                <p>(earns 2-5 gold)</p>
+                <form action="/process" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="whoami" id="" value="house">
+                    <input type="submit" value="Find Gold">
+                </form>
+            </div>
+            <div class="col">
+                <h4>Casino</h4>
+                <p>(earns or loses 50 gold)</p>
+                <form action="/process" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="whoami" id="" value="casino">
+                    <input type="submit" value="Find Gold">
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        <div class="">
+            <p>Activity:</p>
+            <div class="activity">
+                {{request.session.activity|safe}}
+                {% if request.session.win == True %}
+                <p>YOU WIN!</p>
+                {% endif %}
+                {% if request.session.win == False %}
+                <p>YOU LOSE!</p>
+                {% endif %}
+            </div>
+        </div>
+        <form class="blergh" action="/reset">
+            <input type="submit" name="" id="" value="Reset">
+        </form>
+    </div>
+</body>
+</html>

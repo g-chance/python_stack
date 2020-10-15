@@ -1,0 +1,25 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+/* body * {
+    outline: 1px solid black;
+} */
+.container {
+    width: 100%;
+    margin: auto;
+}
+.row {
+    padding: 0px 20px;
+    width: 100%;
+}
+.col {
+    min-height: 100px;
+    background-color: blue;
+    margin: 2px 2px;
+    width: 100px;
+    display: inline-block
+}
+.color0 {
+    background-color: red;
+}

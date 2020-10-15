@@ -1,0 +1,247 @@
+(djangoEnv) gchance@gregsMac single_model_orm % python manage.py shell
+Python 3.7.6 (default, Dec 30 2019, 19:38:26) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.12.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from users_app.models import *                                                                                                                                                                                                                      
+
+In [2]: Users.objects.create(first_name="Greg", last_name="Chance", email_address="ge.chance@gmail.com", age="35")                                                                                                                                          
+Out[2]: <Users: Users object (1)>
+
+In [3]: Users.objects.first().first_name                                                                                                                                                                                                                    
+Out[3]: 'Greg'
+
+In [4]: Users.objects.create(first_name="Vernon", last_name="Lee", email_address="vernonlee2112@gmail.com", age="35")                                                                                                                                       
+Out[4]: <Users: Users object (2)>
+
+In [5]: Users.objects.create(first_name="Andy", last_name="Tong", email_address="tongsta@gmail.com", age="34")                                                                                                                                              
+Out[5]: <Users: Users object (3)>
+
+In [6]: Users.objects.last().first_name                                                                                                                                                                                                                     
+Out[6]: 'Andy'
+
+In [7]: Users.objects.all()                                                                                                                                                                                                                                 
+Out[7]: <QuerySet [<Users: Users object (1)>, <Users: Users object (2)>, <Users: Users object (3)>]>
+
+In [8]: Users.objects.all().first_name                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-8-b0c0a30c2aae> in <module>
+----> 1 Users.objects.all().first_name
+
+AttributeError: 'QuerySet' object has no attribute 'first_name'
+
+In [9]: Users.objects.get(id=3).last_name = "Pancakes"                                                                                                                                                                                                      
+
+In [10]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[10]: 'Tong'
+
+In [11]: Users.objects.get(id=3).save                                                                                                                                                                                                                       
+Out[11]: <bound method Model.save of <Users: Users object (3)>>
+
+In [12]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[12]: 'Tong'
+
+In [13]: Users.objects.get(id=3).last_name = "Pancakes"                                                                                                                                                                                                     
+
+In [14]: Users.objects.get(id=3).save()                                                                                                                                                                                                                     
+
+In [15]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[15]: 'Tong'
+
+In [16]: andy = Users.objects.get(id=3).last_name                                                                                                                                                                                                           
+
+In [17]: andy = Users.objects.get(id=3)                                                                                                                                                                                                                     
+
+In [18]: andy.last_name = "Pancakes"                                                                                                                                                                                                                        
+
+In [19]: andy.save                                                                                                                                                                                                                                          
+Out[19]: <bound method Model.save of <Users: Users object (3)>>
+
+In [20]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[20]: 'Tong'
+
+In [21]: andy.save()                                                                                                                                                                                                                                        
+
+In [22]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[22]: 'Pancakes'
+
+In [23]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[23]: 'Pancakes'
+
+In [24]: Users.objects.get(id=3).last_name = "Bananas"                                                                                                                                                                                                      
+
+In [25]: Users.objects.get(id=3).save()                                                                                                                                                                                                                     
+
+In [26]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[26]: 'Pancakes'
+
+In [27]: andy.save()                                                                                                                                                                                                                                        
+
+In [28]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[28]: 'Pancakes'
+
+In [29]: andy.last_name = "Bananas"                                                                                                                                                                                                                         
+
+In [30]: andy.save()                                                                                                                                                                                                                                        
+
+In [31]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[31]: 'Bananas'
+
+In [32]: Users.objects.get(id=3).last_name = "blahvlah"                                                                                                                                                                                                     
+
+In [33]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[33]: 'Bananas'
+
+In [34]: Users.objects.get(id=3).save()                                                                                                                                                                                                                     
+
+In [35]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[35]: 'Bananas'
+
+In [36]: andy.last_name = "djagjhfs"                                                                                                                                                                                                                        
+
+In [37]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[37]: 'Bananas'
+
+In [38]: andy.save()                                                                                                                                                                                                                                        
+
+In [39]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[39]: 'djagjhfs'
+
+In [40]: andy.last_name = "Bananas"                                                                                                                                                                                                                         
+
+In [41]: andy.save()                                                                                                                                                                                                                                        
+
+In [42]: Users.objects.get(id=3).last_name                                                                                                                                                                                                                  
+Out[42]: 'Bananas'
+
+In [43]: Users.objects.get(id=2.delete())                                                                                                                                                                                                                   
+  File "<ipython-input-43-45c246e802af>", line 1
+    Users.objects.get(id=2.delete())
+                                ^
+SyntaxError: invalid syntax
+
+
+In [44]: Users.objects.get(id=2)                                                                                                                                                                                                                            
+Out[44]: <Users: Users object (2)>
+
+In [45]: Users.objects.get(id=2).first_name                                                                                                                                                                                                                 
+Out[45]: 'Vernon'
+
+In [46]: Users.objects.get(id=2).delete()                                                                                                                                                                                                                   
+Out[46]: (1, {'users_app.Users': 1})
+
+In [47]: Users.objects.get(id=2).first_name                                                                                                                                                                                                                 
+---------------------------------------------------------------------------
+DoesNotExist                              Traceback (most recent call last)
+<ipython-input-47-46d19b0ef944> in <module>
+----> 1 Users.objects.get(id=2).first_name
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in get(self, *args, **kwargs)
+    415             raise self.model.DoesNotExist(
+    416                 "%s matching query does not exist." %
+--> 417                 self.model._meta.object_name
+    418             )
+    419         raise self.model.MultipleObjectsReturned(
+
+DoesNotExist: Users matching query does not exist.
+
+In [48]: Users.objects.get(id=3).first_name                                                                                                                                                                                                                 
+Out[48]: 'Andy'
+
+In [49]: Users.objects.all()                                                                                                                                                                                                                                
+Out[49]: <QuerySet [<Users: Users object (1)>, <Users: Users object (3)>]>
+
+In [50]: Users.objects.all().order_by('first_name')                                                                                                                                                                                                         
+Out[50]: <QuerySet [<Users: Users object (3)>, <Users: Users object (1)>]>
+
+In [51]: for m in Users: 
+    ...:     m.get.first_name 
+    ...:                                                                                                                                                                                                                                                    
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-51-e65f28a9d8fc> in <module>
+----> 1 for m in Users:
+      2     m.get.first_name
+      3 
+
+TypeError: 'ModelBase' object is not iterable
+
+In [52]: for m in Users: 
+    ...:     m.first_name 
+    ...:      
+    ...:                                                                                                                                                                                                                                                    
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-52-f13bb17180c1> in <module>
+----> 1 for m in Users:
+      2     m.first_name
+      3 
+      4 
+
+TypeError: 'ModelBase' object is not iterable
+
+In [53]: for m in Users: 
+    ...:     print(m.first_name) 
+    ...:                                                                                                                                                                                                                                                    
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-53-88a2540b1ac1> in <module>
+----> 1 for m in Users:
+      2     print(m.first_name)
+      3 
+
+TypeError: 'ModelBase' object is not iterable
+
+In [54]: for m in Users.objects.all(): 
+    ...:     m.get.first_name 
+    ...:                                                                                                                                                                                                                                                    
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-54-4159e3cdcf3e> in <module>
+      1 for m in Users.objects.all():
+----> 2     m.get.first_name
+      3 
+
+AttributeError: 'Users' object has no attribute 'get'
+
+In [55]: for m in Users.objects.all(): 
+    ...:     m.first_name 
+    ...:      
+    ...:                                                                                                                                                                                                                                                    
+
+In [56]: for m in Users.objects.all(): 
+    ...:     print(m.first_name) 
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                    
+Greg
+Andy
+
+In [57]: for m in Users.objects.all().order_by('first_name')                                                                                                                                                                                                
+  File "<ipython-input-57-3da73104e90a>", line 1
+    for m in Users.objects.all().order_by('first_name')
+                                                       ^
+SyntaxError: invalid syntax
+
+
+In [58]: for m in Users.objects.all().order_by('first_name'): 
+    ...:     print(m.first_name) 
+    ...:                                                                                                                                                                                                                                                    
+Andy
+Greg
+
+In [59]: for m in Users.objects.all().order_by('-first_name'): 
+    ...:     print(m.first_name) 
+    ...:                                                                                                                                                                                                                                                    
+Greg
+Andy
+
+In [60]:     

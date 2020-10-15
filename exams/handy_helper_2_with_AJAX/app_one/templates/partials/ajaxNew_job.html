@@ -1,0 +1,5 @@
+{% for message in messages %}
+{% if 'title' in message.tags %}
+<p class="{{message.tags}}">{{message}}</p>
+{% endif %}
+{% endfor %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h3>Add A New Book Title and Review:</h3>
+            <div>
+                <a href="/books">Home</a>
+                <a href="/rd/logout">Logout</a>
+            </div>
+        </nav>
+        <form action="/rd/add_book" class="booksAdd-inner" method="POST">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" name="title">
+            <label class="authlabel" for="choose_author">Author:</label>
+            <p class="authsublabel">Choose from the list:</p>
+            <select name="choose_author" id="">
+                <option value="">Placeholder</option>
+            </select>
+            <label class="authsublabel" for="author">Or add a new author</label>
+            <input type="text" name="author">
+            <label for="comment">Review:</label>
+            <textarea name="comment" id="" cols="30" rows="10"></textarea>
+            <label for="rating">Rating:</label>
+            <select name="rating" id="">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <input class="submit" type="submit" value="Add Book and Review">
+        </form>
+    </div>
+</body>
+</html>

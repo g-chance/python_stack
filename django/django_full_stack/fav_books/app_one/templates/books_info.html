@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <h1>Book Information</h1>
+            <div>
+                <a href="/books_dash">Go Back</a>
+                <a href="/rd/logout">Logout</a>
+            </div>
+        </div>
+        <div class="inner1">
+            <div class="col left">
+                <form class="books_info_form" action="/rd/edit_book/{{book.id}}" method="POST">
+                {% csrf_token %}
+                {% if request.session.userid == book.added_user.id %}
+                    <input class="leftinput" type="text" name="title" value="{{book.title}}">
+                    {% else %}
+                    <h2 class="leftinput">{{book.title}}</h2>
+                    {% endif %}
+                    <p>Added by:</p>
+                    <p>{{book.added_user.first_name}} {{book.added_user.last_name}}</p>
+                    <p>Added on:</p>
+                    <p>{{book.created_at}}</p>
+                    <p>Last updated on:</p>
+                    <p>{{book.updated_at}}</p>
+                    <p>Description:</p>
+                    {% if request.session.userid == book.added_user.id %}
+                    <textarea class="leftinput2" name="description" id="" cols="30" rows="10">{{book.description}}</textarea>
+                    <input type="submit" value="Update">
+                    <button type="submit" formaction="/rd/delete_book/{{book.id}}" value="Delete">Delete</button>
+                    {% else %}
+                    <p class="leftinput2">{{book.description}}</p>
+                    {% endif %}
+                </form>
+            </div>
+            <div class="col right">
+                <h2>Users Who Like This Book:</h2>
+                <ul>
+                {% for user in liked_users %}
+                    <li>{{user.first_name}} {{user.last_name}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

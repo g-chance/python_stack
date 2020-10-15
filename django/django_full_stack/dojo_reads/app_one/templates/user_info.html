@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h3>{{book.title}}</h3>
+            <div>
+                <a href="/books">Home</a>
+                <a href="/rd/logout">Logout</a>
+            </div>
+        </nav>
+        <div class="inner1 inner1books-info">
+            <div class="col">
+                <h4>User: {{user.first_name}} {{user.last_name}}</h4>
+                <p>Email: {{user.email}}</p>
+                <p>Total Reviews: {{count}}</p>
+            </div>
+            <div class="col">
+                <h4>{{user.first_name}} has reviewed the following books:</h4>
+                {% for book in user.books.all %}
+                <p>{{book.title}}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

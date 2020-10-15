@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* body * {
+            outline: 1px solid black;
+        } */
+        .container {
+            margin: auto;
+            width: 1000px;
+            margin-top: 100px
+        }
+        img {
+            width: 300px;
+            margin-left: 22px;
+        }
+        form {
+            margin-top: 50px;
+            text-align: center;
+        }
+        p {
+            text-align: center
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='img/paper.jpg') }}" alt="">
+        <img src="{{ url_for('static', filename='img/scissors.jpg') }}" alt="">
+        <img src="{{ url_for('static', filename='img/rock.jpg') }}" alt="">
+        <form action="/result" method="POST">
+            <label for="choice">Choose your player:</label>
+            <select name="choice" >
+                <option value="rock">Rock</option>
+                <option value="paper">Paper</option>
+                <option value="scissors">Scissors</option>
+            </select>
+            <input type="submit">
+            <p>You picked {{choice}}</p>
+            <p>Computer picked {{computerchoice}}</p>
+            <p>{{whatever}}</p>
+        </form>
+    </div>
+</body>
+</html>

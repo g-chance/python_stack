@@ -1,0 +1,63 @@
+/* body * {
+    outline: 1px solid black;
+} */
+
+.container {
+    width: 75%;
+    margin: auto
+}
+
+.tg {
+    display: inline-block;
+    vertical-align: middle;
+}
+#tgb {
+    border: 1px solid black;
+    width: 100px;
+    text-align: center;
+
+}
+.container2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.col {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin: 10px;
+    min-height: 100px;
+    padding-bottom: 20px;
+}
+.activity {
+    border: 1px solid black;
+    min-height: 150px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.activity p {
+    margin: 0px;
+}
+.blergh {
+    width: fit-content;
+    margin: 20px auto;
+}
+.earn {
+    color: green;
+}
+.lose {
+    color: red;
+}
+.centerform {
+    width: fit-content;
+    margin: 10px auto;
+    text-align: center;
+}
+
+@media only screen and (max-width: 800px) {
+    .container2 {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance Belt Exam</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#title').keyup(function(e) {
+                data = $('form').serialize()
+                $.ajax ({
+                    url: '/rd/ajax/new_job',
+                    method: 'post',
+                    data: data,
+                })
+                .done(function(res) {
+                    $('#title_lab').html(res)
+                })
+                console.log("IS THAS WARKING?");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h2>Yo {{user.first_name}}, Let's Create A Job!</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a>
+                <a class="nav-a" href="/rd/logout">Logout</a>
+            </div>
+        </nav>
+        <div class="inner1">
+            <div class="col">
+                <form class="jN-form" action="/rd/new_job" method="post">
+                    {% csrf_token %}
+                    {% for message in messages %}
+                        {% if 'title' in message.tags %}
+                        <p class="{{message.tags}}">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <label id="title_lab" for="title">Title:</label>
+                    <input id="title" type="text" name="title">
+                    {% for message in messages %}
+                        {% if 'location' in message.tags %}
+                        <p class="{{message.tags}}">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <label for="location">Location:</label>
+                    <input type="text" name="location">
+                    {% for message in messages %}
+                        {% if 'description' in message.tags %}
+                        <p class="{{message.tags}}">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="" cols="30" rows="10"></textarea>
+                    <label for="categories">Categories:</label>
+                    <div class="jN-checkboxes">
+                        <div>
+                            <input type="checkbox" name="categories" value="finance">
+                            <label for="finance">Finance</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="categories" value="household">
+                            <label for="household">Household</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="categories" value="school">
+                            <label for="school">School</label>
+                        </div>
+                        <label for="new_cat">Other:</label>
+                        <input type="text" name="categories">
+                    </div>
+                    <div class="jN-submit">
+                        <button type="submit" formaction="/dashboard">Cancel</button>
+                        <input type="submit" value="Create">
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <h1></h1>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

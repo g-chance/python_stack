@@ -1,0 +1,1645 @@
+Last login: Tue Feb 11 14:03:46 on ttys001
+gchance@gregsMac ~ % cd ~
+gchance@gregsMac ~ % cd Documents/codingDojo/python_stack/django/django_orm/dojo_ninjas_proj 
+gchance@gregsMac dojo_ninjas_proj % ls
+db.sqlite3		dojo_ninjas_app		dojo_ninjas_proj	manage.py
+gchance@gregsMac dojo_ninjas_proj % cd ../../../my_environment 
+gchance@gregsMac my_environment % source djangoEnv/bin/activate
+(djangoEnv) gchance@gregsMac my_environment % ls
+djangoEnv	flaskEnv	testEnv
+(djangoEnv) gchance@gregsMac my_environment % cd ..
+(djangoEnv) gchance@gregsMac python_stack % cd django/django_orm/dojo_ninjas_proj 
+(djangoEnv) gchance@gregsMac dojo_ninjas_proj % ls
+db.sqlite3		dojo_ninjas_app		dojo_ninjas_proj	manage.py
+(djangoEnv) gchance@gregsMac dojo_ninjas_proj % python manage.py shell
+Python 3.7.6 (default, Dec 30 2019, 19:38:26) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.12.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from dojo_ninjas_app.models import *                                                                                                                                                                                                                   
+
+In [2]: Dojos.objects.all()                                                                                                                                                                                                                                    
+Out[2]: <QuerySet []>
+
+In [3]: Dojos.objects.create(name="SJC",city="San Jose",state="CA")                                                                                                                                                                                            
+Out[3]: <Dojos: Dojos object (4)>
+
+In [4]: Dojos.objects.create(name="Seattle",city="Seattle",state="WA")                                                                                                                                                                                         
+Out[4]: <Dojos: Dojos object (5)>
+
+In [5]: Dojos.objects.create(name="CrazyTown",city="Orlando",state="FL")                                                                                                                                                                                       
+Out[5]: <Dojos: Dojos object (6)>
+
+In [6]: Ninjas.objects.create(first_name="Greg", last_name="Chance", dojo=Dojos.objects.get(id=1))                                                                                                                                                             
+---------------------------------------------------------------------------
+DoesNotExist                              Traceback (most recent call last)
+<ipython-input-6-69423dfb5c1f> in <module>
+----> 1 Ninjas.objects.create(first_name="Greg", last_name="Chance", dojo=Dojos.objects.get(id=1))
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in get(self, *args, **kwargs)
+    415             raise self.model.DoesNotExist(
+    416                 "%s matching query does not exist." %
+--> 417                 self.model._meta.object_name
+    418             )
+    419         raise self.model.MultipleObjectsReturned(
+
+DoesNotExist: Dojos matching query does not exist.
+
+In [7]: Dojos.objects.all()                                                                                                                                                                                                                                    
+Out[7]: <QuerySet [<Dojos: Dojos object (4)>, <Dojos: Dojos object (5)>, <Dojos: Dojos object (6)>]>
+
+In [8]: Ninjas.objects.create(first_name="Greg", last_name="Chance", dojo=Dojos.objects.get(id=4))                                                                                                                                                             
+Out[8]: <Ninjas: Ninjas object (1)>
+
+In [9]: Ninjas.objects.create(first_name="Ashley", last_name="Fraiche", dojo=Dojos.objects.get(id=5))                                                                                                                                                          
+Out[9]: <Ninjas: Ninjas object (2)>
+
+In [10]: Ninjas.objects.create(first_name="Guy", last_name="McGee", dojo=Dojos.objects.get(id=6))                                                                                                                                                              
+Out[10]: <Ninjas: Ninjas object (3)>
+
+In [11]: Ninjas.objects.create(first_name="Eric", last_name="Cartman", dojo=Dojos.objects.get(id=4))                                                                                                                                                           
+Out[11]: <Ninjas: Ninjas object (4)>
+
+In [12]: Ninjas.objects.create(first_name="Randy", last_name="Marsh", dojo=Dojos.objects.get(id=4))                                                                                                                                                            
+Out[12]: <Ninjas: Ninjas object (5)>
+
+In [13]: Ninjas.objects.create(first_name="Kyle", last_name="Brovslovski", dojo=Dojos.objects.get(id=5))                                                                                                                                                       
+Out[13]: <Ninjas: Ninjas object (6)>
+
+In [14]: Ninjas.objects.create(first_name="Hello", last_name="Mello", dojo=Dojos.objects.get(id=5))                                                                                                                                                            
+Out[14]: <Ninjas: Ninjas object (7)>
+
+In [15]: Ninjas.objects.create(first_name="Chris", last_name="Evans", dojo=Dojos.objects.get(id=6))                                                                                                                                                            
+Out[15]: <Ninjas: Ninjas object (8)>
+
+In [16]: Ninjas.objects.create(first_name="Ariana", last_name="Grande", dojo=Dojos.objects.get(id=6))                                                                                                                                                          
+Out[16]: <Ninjas: Ninjas object (9)>
+
+In [17]: Dojos.objects.all()                                                                                                                                                                                                                                   
+Out[17]: <QuerySet [<Dojos: Dojos object (4)>, <Dojos: Dojos object (5)>, <Dojos: Dojos object (6)>]>
+
+In [18]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.ninjas) 
+    ...:                                                                                                                                                                                                                                                       
+dojo_ninjas_app.Ninjas.None
+dojo_ninjas_app.Ninjas.None
+dojo_ninjas_app.Ninjas.None
+
+In [19]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.ninjas.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-19-61cde347d925> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.ninjas.first_name)
+      3 
+      4 
+
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+
+In [20]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name) 
+    ...:                                                                                                                                                                                                                                                       
+SJC
+Seattle
+CrazyTown
+
+In [21]: Ninjas.objects.all()                                                                                                                                                                                                                                  
+Out[21]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (2)>, <Ninjas: Ninjas object (3)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>, <Ninjas: Ninjas object (6)>, <Ninjas: Ninjas object (7)>, <Ninjas: Ninjas object (8)>, <Ninjas: Ninjas object (9)>]>
+
+In [22]: for ninja in Ninjas.objects.all(): 
+    ...:     print(ninja.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+Greg
+Ashley
+Guy
+Eric
+Randy
+Kyle
+Hello
+Chris
+Ariana
+
+In [23]: for ninja in Ninjas.objects.all(): 
+    ...:     print(ninja.first_name, ninja.dojo) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Greg Dojos object (4)
+Ashley Dojos object (5)
+Guy Dojos object (6)
+Eric Dojos object (4)
+Randy Dojos object (4)
+Kyle Dojos object (5)
+Hello Dojos object (5)
+Chris Dojos object (6)
+Ariana Dojos object (6)
+
+In [24]: for ninja in Ninjas.objects.all(): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:                                                                                                                                                                                                                                                       
+Greg SJC
+Ashley Seattle
+Guy CrazyTown
+Eric SJC
+Randy SJC
+Kyle Seattle
+Hello Seattle
+Chris CrazyTown
+Ariana CrazyTown
+
+In [25]: for ninja in Ninjas.objects.all().order_by(dojo.name) 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:  
+    ...:                                                                                                                                                                                                                                                       
+  File "<ipython-input-25-f904f16325e7>", line 1
+    for ninja in Ninjas.objects.all().order_by(dojo.name)
+                                                         ^
+SyntaxError: invalid syntax
+
+
+In [26]: for ninja in Ninjas.objects.all().order_by('dojo'.name) 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:  
+    ...:  
+    ...:                                                                                                                                                                                                                                                       
+  File "<ipython-input-26-6eb632b2e523>", line 1
+    for ninja in Ninjas.objects.all().order_by('dojo'.name)
+                                                           ^
+SyntaxError: invalid syntax
+
+
+In [27]: for ninja in Ninjas.objects.all().order_by('first_name') 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:  
+    ...:  
+    ...:  
+    ...:                                                                                                                                                                                                                                                       
+  File "<ipython-input-27-f4612e3a26bf>", line 1
+    for ninja in Ninjas.objects.all().order_by('first_name')
+                                                            ^
+SyntaxError: invalid syntax
+
+
+In [28]: for ninja in Ninjas.objects.all().order_by(dojo.name): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+<ipython-input-28-c2e4bc551619> in <module>
+----> 1 for ninja in Ninjas.objects.all().order_by(dojo.name):
+      2     print(ninja.first_name, ninja.dojo.name)
+      3 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in __iter__(self)
+    274                - Responsible for turning the rows into model objects.
+    275         """
+--> 276         self._fetch_all()
+    277         return iter(self._result_cache)
+    278 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in _fetch_all(self)
+   1259     def _fetch_all(self):
+   1260         if self._result_cache is None:
+-> 1261             self._result_cache = list(self._iterable_class(self))
+   1262         if self._prefetch_related_lookups and not self._prefetch_done:
+   1263             self._prefetch_related_objects()
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in __iter__(self)
+     55         # Execute the query. This will also fill compiler.select, klass_info,
+     56         # and annotations.
+---> 57         results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+     58         select, klass_info, annotation_col_map = (compiler.select, compiler.klass_info,
+     59                                                   compiler.annotation_col_map)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/compiler.py in execute_sql(self, result_type, chunked_fetch, chunk_size)
+   1129         result_type = result_type or NO_RESULTS
+   1130         try:
+-> 1131             sql, params = self.as_sql()
+   1132             if not sql:
+   1133                 raise EmptyResultSet
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/compiler.py in as_sql(self, with_limits, with_col_aliases)
+    488         refcounts_before = self.query.alias_refcount.copy()
+    489         try:
+--> 490             extra_select, order_by, group_by = self.pre_sql_setup()
+    491             for_update_part = None
+    492             # Is a LIMIT/OFFSET clause needed?
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/compiler.py in pre_sql_setup(self)
+     50         """
+     51         self.setup_query()
+---> 52         order_by = self.get_order_by()
+     53         self.where, self.having = self.query.where.split_having()
+     54         extra_select = self.get_extra_select(order_by, self.select)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/compiler.py in get_order_by(self)
+    340                 # '-field1__field2__field', etc.
+    341                 order_by.extend(self.find_ordering_name(
+--> 342                     field, self.query.get_meta(), default_order=asc))
+    343             else:
+    344                 if col not in self.query.extra_select:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/compiler.py in find_ordering_name(self, name, opts, alias, default_order, already_seen)
+    718         descending = order == 'DESC'
+    719         pieces = name.split(LOOKUP_SEP)
+--> 720         field, targets, alias, joins, path, opts, transform_function = self._setup_joins(pieces, opts, alias)
+    721 
+    722         # If we get to this point and the field is a relation to another model,
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/compiler.py in _setup_joins(self, pieces, opts, alias)
+    753         """
+    754         alias = alias or self.query.get_initial_alias()
+--> 755         field, targets, opts, joins, path, transform_function = self.query.setup_joins(pieces, opts, alias)
+    756         alias = joins[-1]
+    757         return field, targets, alias, joins, path, opts, transform_function
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in setup_joins(self, names, opts, alias, can_reuse, allow_many, reuse_with_filtered_relation)
+   1565             try:
+   1566                 path, final_field, targets, rest = self.names_to_path(
+-> 1567                     names[:pivot], opts, allow_many, fail_on_missing=True,
+   1568                 )
+   1569             except FieldError as exc:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in names_to_path(self, names, opts, allow_many, fail_on_missing)
+   1481                     ])
+   1482                     raise FieldError("Cannot resolve keyword '%s' into field. "
+-> 1483                                      "Choices are: %s" % (name, ", ".join(available)))
+   1484                 break
+   1485             # Check if we need any joins for concrete inheritance cases (the
+
+FieldError: Cannot resolve keyword 'CrazyTown' into field. Choices are: dojo, dojo_id, first_name, id, last_name
+
+In [29]: for ninja in Ninjas.objects.all().order_by('first_name'): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Ariana CrazyTown
+Ashley Seattle
+Chris CrazyTown
+Eric SJC
+Greg SJC
+Guy CrazyTown
+Hello Seattle
+Kyle Seattle
+Randy SJC
+
+In [30]: for ninja in Ninjas.objects.all().order_by('dojo'): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Greg SJC
+Eric SJC
+Randy SJC
+Ashley Seattle
+Kyle Seattle
+Hello Seattle
+Guy CrazyTown
+Chris CrazyTown
+Ariana CrazyTown
+
+In [31]: for ninja in Ninjas.objects.all().order_by('dojo'.name): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:      
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-31-be376976fc86> in <module>
+----> 1 for ninja in Ninjas.objects.all().order_by('dojo'.name):
+      2     print(ninja.first_name, ninja.dojo.name)
+      3 
+      4 
+      5 
+
+AttributeError: 'str' object has no attribute 'name'
+
+In [32]: for ninja in Ninjas.objects.filter(ninja.dojo.name = "SJC") 
+    ...:     print(ninja.first_name, ninja.dojo.name)                                                                                                                                                                                                          
+  File "<ipython-input-32-51998878629c>", line 1
+    for ninja in Ninjas.objects.filter(ninja.dojo.name = "SJC")
+                                                               ^
+SyntaxError: invalid syntax
+
+
+In [33]:                                                                                                                                                                                                                                                       
+
+In [33]: for ninja in Ninjas.objects.filter(ninja.dojo.name = "SJC"): 
+    ...:     print(ninja.first_name, ninja.dojo.name)                                                                                                                                                                                                          
+  File "<ipython-input-33-769c48111f2b>", line 1
+    for ninja in Ninjas.objects.filter(ninja.dojo.name = "SJC"):
+                                      ^
+SyntaxError: keyword can't be an expression
+
+
+In [34]:                                                                                                                                                                                                                                                       
+
+In [34]: for ninja in Ninjas.objects.filter(ninja.dojo.name = "SJC"): 
+    ...:     print(ninja.first_name, ninja.dojo.name)                                                                                                                                                                                                          
+  File "<ipython-input-34-769c48111f2b>", line 1
+    for ninja in Ninjas.objects.filter(ninja.dojo.name = "SJC"):
+                                      ^
+SyntaxError: keyword can't be an expression
+
+
+In [35]: for ninja in Ninjas.objects.filter(name = "SJC"): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:     )                                                                                                                                                                                                                                                 
+  File "<ipython-input-35-c43af6ef1e6a>", line 3
+    )
+    ^
+SyntaxError: invalid syntax
+
+
+In [36]: for ninja in Ninjas.objects.filter(name = "SJC"): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+<ipython-input-36-474586f4e102> in <module>
+----> 1 for ninja in Ninjas.objects.filter(name = "SJC"):
+      2     print(ninja.first_name, ninja.dojo.name)
+      3 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in filter(self, *args, **kwargs)
+    902         """
+    903         self._not_support_combined_queries('filter')
+--> 904         return self._filter_or_exclude(False, *args, **kwargs)
+    905 
+    906     def exclude(self, *args, **kwargs):
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in _filter_or_exclude(self, negate, *args, **kwargs)
+    921             clone.query.add_q(~Q(*args, **kwargs))
+    922         else:
+--> 923             clone.query.add_q(Q(*args, **kwargs))
+    924         return clone
+    925 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in add_q(self, q_object)
+   1348         # So, demotion is OK.
+   1349         existing_inner = {a for a in self.alias_map if self.alias_map[a].join_type == INNER}
+-> 1350         clause, _ = self._add_q(q_object, self.used_aliases)
+   1351         if clause:
+   1352             self.where.add(clause, AND)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in _add_q(self, q_object, used_aliases, branch_negated, current_negated, allow_joins, split_subq, simple_col, check_filterable)
+   1379                     current_negated=current_negated, allow_joins=allow_joins,
+   1380                     split_subq=split_subq, simple_col=simple_col,
+-> 1381                     check_filterable=check_filterable,
+   1382                 )
+   1383                 joinpromoter.add_votes(needed_inner)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in build_filter(self, filter_expr, branch_negated, current_negated, can_reuse, allow_joins, split_subq, reuse_with_filtered_relation, simple_col, check_filterable)
+   1248         if not arg:
+   1249             raise FieldError("Cannot parse keyword query %r" % arg)
+-> 1250         lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+   1251 
+   1252         if check_filterable:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in solve_lookup_type(self, lookup)
+   1085             if expression:
+   1086                 return expression_lookups, (), expression
+-> 1087         _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+   1088         field_parts = lookup_splitted[0:len(lookup_splitted) - len(lookup_parts)]
+   1089         if len(lookup_parts) > 1 and not field_parts:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in names_to_path(self, names, opts, allow_many, fail_on_missing)
+   1481                     ])
+   1482                     raise FieldError("Cannot resolve keyword '%s' into field. "
+-> 1483                                      "Choices are: %s" % (name, ", ".join(available)))
+   1484                 break
+   1485             # Check if we need any joins for concrete inheritance cases (the
+
+FieldError: Cannot resolve keyword 'name' into field. Choices are: dojo, dojo_id, first_name, id, last_name
+
+In [37]: Ninjas.objects.filter(name = "SJC") 
+    ...:  
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+<ipython-input-37-9e62b649bf53> in <module>
+----> 1 Ninjas.objects.filter(name = "SJC")
+      2 
+      3 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in filter(self, *args, **kwargs)
+    902         """
+    903         self._not_support_combined_queries('filter')
+--> 904         return self._filter_or_exclude(False, *args, **kwargs)
+    905 
+    906     def exclude(self, *args, **kwargs):
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in _filter_or_exclude(self, negate, *args, **kwargs)
+    921             clone.query.add_q(~Q(*args, **kwargs))
+    922         else:
+--> 923             clone.query.add_q(Q(*args, **kwargs))
+    924         return clone
+    925 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in add_q(self, q_object)
+   1348         # So, demotion is OK.
+   1349         existing_inner = {a for a in self.alias_map if self.alias_map[a].join_type == INNER}
+-> 1350         clause, _ = self._add_q(q_object, self.used_aliases)
+   1351         if clause:
+   1352             self.where.add(clause, AND)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in _add_q(self, q_object, used_aliases, branch_negated, current_negated, allow_joins, split_subq, simple_col, check_filterable)
+   1379                     current_negated=current_negated, allow_joins=allow_joins,
+   1380                     split_subq=split_subq, simple_col=simple_col,
+-> 1381                     check_filterable=check_filterable,
+   1382                 )
+   1383                 joinpromoter.add_votes(needed_inner)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in build_filter(self, filter_expr, branch_negated, current_negated, can_reuse, allow_joins, split_subq, reuse_with_filtered_relation, simple_col, check_filterable)
+   1248         if not arg:
+   1249             raise FieldError("Cannot parse keyword query %r" % arg)
+-> 1250         lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+   1251 
+   1252         if check_filterable:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in solve_lookup_type(self, lookup)
+   1085             if expression:
+   1086                 return expression_lookups, (), expression
+-> 1087         _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+   1088         field_parts = lookup_splitted[0:len(lookup_splitted) - len(lookup_parts)]
+   1089         if len(lookup_parts) > 1 and not field_parts:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in names_to_path(self, names, opts, allow_many, fail_on_missing)
+   1481                     ])
+   1482                     raise FieldError("Cannot resolve keyword '%s' into field. "
+-> 1483                                      "Choices are: %s" % (name, ", ".join(available)))
+   1484                 break
+   1485             # Check if we need any joins for concrete inheritance cases (the
+
+FieldError: Cannot resolve keyword 'name' into field. Choices are: dojo, dojo_id, first_name, id, last_name
+
+In [38]: Ninjas.objects.filter("first_name = "Eric")                                                                                                                                                                                                           
+  File "<ipython-input-38-679b3a468cce>", line 1
+    Ninjas.objects.filter("first_name = "Eric")
+                                            ^
+SyntaxError: invalid syntax
+
+
+In [39]: Ninjas.objects.filter("first_name" = "Eric")                                                                                                                                                                                                          
+  File "<ipython-input-39-bacf3b912c0b>", line 1
+    Ninjas.objects.filter("first_name" = "Eric")
+                         ^
+SyntaxError: keyword can't be an expression
+
+
+In [40]: Ninjas.objects.filter(first_name = "Eric")                                                                                                                                                                                                            
+Out[40]: <QuerySet [<Ninjas: Ninjas object (4)>]>
+
+In [41]:                                                                                                                                                                                                                                                       
+
+In [41]: Ninjas.objects.filter(name = "SJC")                                                                                                                                                                                                                   
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+<ipython-input-41-46c95bfffb0f> in <module>
+----> 1 Ninjas.objects.filter(name = "SJC")
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in filter(self, *args, **kwargs)
+    902         """
+    903         self._not_support_combined_queries('filter')
+--> 904         return self._filter_or_exclude(False, *args, **kwargs)
+    905 
+    906     def exclude(self, *args, **kwargs):
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in _filter_or_exclude(self, negate, *args, **kwargs)
+    921             clone.query.add_q(~Q(*args, **kwargs))
+    922         else:
+--> 923             clone.query.add_q(Q(*args, **kwargs))
+    924         return clone
+    925 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in add_q(self, q_object)
+   1348         # So, demotion is OK.
+   1349         existing_inner = {a for a in self.alias_map if self.alias_map[a].join_type == INNER}
+-> 1350         clause, _ = self._add_q(q_object, self.used_aliases)
+   1351         if clause:
+   1352             self.where.add(clause, AND)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in _add_q(self, q_object, used_aliases, branch_negated, current_negated, allow_joins, split_subq, simple_col, check_filterable)
+   1379                     current_negated=current_negated, allow_joins=allow_joins,
+   1380                     split_subq=split_subq, simple_col=simple_col,
+-> 1381                     check_filterable=check_filterable,
+   1382                 )
+   1383                 joinpromoter.add_votes(needed_inner)
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in build_filter(self, filter_expr, branch_negated, current_negated, can_reuse, allow_joins, split_subq, reuse_with_filtered_relation, simple_col, check_filterable)
+   1248         if not arg:
+   1249             raise FieldError("Cannot parse keyword query %r" % arg)
+-> 1250         lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+   1251 
+   1252         if check_filterable:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in solve_lookup_type(self, lookup)
+   1085             if expression:
+   1086                 return expression_lookups, (), expression
+-> 1087         _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+   1088         field_parts = lookup_splitted[0:len(lookup_splitted) - len(lookup_parts)]
+   1089         if len(lookup_parts) > 1 and not field_parts:
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/sql/query.py in names_to_path(self, names, opts, allow_many, fail_on_missing)
+   1481                     ])
+   1482                     raise FieldError("Cannot resolve keyword '%s' into field. "
+-> 1483                                      "Choices are: %s" % (name, ", ".join(available)))
+   1484                 break
+   1485             # Check if we need any joins for concrete inheritance cases (the
+
+FieldError: Cannot resolve keyword 'name' into field. Choices are: dojo, dojo_id, first_name, id, last_name
+
+In [42]: Dojos.objects.filter(name = "SJC")                                                                                                                                                                                                                    
+Out[42]: <QuerySet [<Dojos: Dojos object (4)>]>
+
+In [43]: Ninjas.objects.filter(dojo.name = "SJC")                                                                                                                                                                                                              
+  File "<ipython-input-43-9c51ff11f94b>", line 1
+    Ninjas.objects.filter(dojo.name = "SJC")
+                         ^
+SyntaxError: keyword can't be an expression
+
+
+In [44]: Ninjas.objects.filter(dojo.name = "SJC")                                                                                                                                                                                                              
+  File "<ipython-input-44-9c51ff11f94b>", line 1
+    Ninjas.objects.filter(dojo.name = "SJC")
+                         ^
+SyntaxError: keyword can't be an expression
+
+
+In [45]: Dojos.objects.first().ninjas                                                                                                                                                                                                                          
+Out[45]: <django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager at 0x10b7cf850>
+
+In [46]: Dojos.objects.first().ninjas.first_name                                                                                                                                                                                                               
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-46-6eacbe6418b2> in <module>
+----> 1 Dojos.objects.first().ninjas.first_name
+
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+
+In [47]: Dojos.objects.first().ninjas.all()                                                                                                                                                                                                                    
+Out[47]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [48]: Dojos.objects.first().ninjas.first().name                                                                                                                                                                                                             
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-48-6740bc9fa332> in <module>
+----> 1 Dojos.objects.first().ninjas.first().name
+
+AttributeError: 'Ninjas' object has no attribute 'name'
+
+In [49]: Dojos.objects.first().ninjas.first().first_name                                                                                                                                                                                                       
+Out[49]: 'Greg'
+
+In [50]: for ninja in Dojos.objects.first().ninjas.all(): 
+    ...:     print(ninja.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+Greg
+Eric
+Randy
+
+In [51]: for ninja in Dojos.objects.get(id=2).ninjas.all(): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+DoesNotExist                              Traceback (most recent call last)
+<ipython-input-51-738a847d7c19> in <module>
+----> 1 for ninja in Dojos.objects.get(id=2).ninjas.all():
+      2     print(ninja.first_name)
+      3 
+      4 
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in get(self, *args, **kwargs)
+    415             raise self.model.DoesNotExist(
+    416                 "%s matching query does not exist." %
+--> 417                 self.model._meta.object_name
+    418             )
+    419         raise self.model.MultipleObjectsReturned(
+
+DoesNotExist: Dojos matching query does not exist.
+
+In [52]: for ninja in Dojos.objects.get(id=5).ninjas.all(): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Ashley
+Kyle
+Hello
+
+In [53]: for ninja in Dojos.objects.get(id=6).ninjas.all(): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Guy
+Chris
+Ariana
+
+In [54]: Ninjas.objects.all().dojo                                                                                                                                                                                                                             
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-54-100e814dd17e> in <module>
+----> 1 Ninjas.objects.all().dojo
+
+AttributeError: 'QuerySet' object has no attribute 'dojo'
+
+In [55]: Ninjas.objects.all()                                                                                                                                                                                                                                  
+Out[55]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (2)>, <Ninjas: Ninjas object (3)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>, <Ninjas: Ninjas object (6)>, <Ninjas: Ninjas object (7)>, <Ninjas: Ninjas object (8)>, <Ninjas: Ninjas object (9)>]>
+
+In [56]: Ninjas.objects.all().first_name                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-56-1beef1097755> in <module>
+----> 1 Ninjas.objects.all().first_name
+
+AttributeError: 'QuerySet' object has no attribute 'first_name'
+
+In [57]: for ninja in  Ninjas.objects.all(): 
+    ...:     print(ninja.dojo.name) 
+    ...:                                                                                                                                                                                                                                                       
+SJC
+Seattle
+CrazyTown
+SJC
+SJC
+Seattle
+Seattle
+CrazyTown
+CrazyTown
+
+In [58]: for ninja in  Ninjas.objects.all(): 
+    ...:     Ninja.object.filter(dojo.name = "SJC") 
+    ...:  
+    ...:                                                                                                                                                                                                                                                       
+  File "<ipython-input-58-d26677bceff9>", line 2
+    Ninja.object.filter(dojo.name = "SJC")
+                       ^
+SyntaxError: keyword can't be an expression
+
+
+In [59]: Ninjas.objects.filter(dojo.name = "SJC")                                                                                                                                                                                                              
+  File "<ipython-input-59-9c51ff11f94b>", line 1
+    Ninjas.objects.filter(dojo.name = "SJC")
+                         ^
+SyntaxError: keyword can't be an expression
+
+
+In [60]: Ninjas.objects.filter(dojo.name = "SJC")                                                                                                                                                                                                              
+  File "<ipython-input-60-9c51ff11f94b>", line 1
+    Ninjas.objects.filter(dojo.name = "SJC")
+                         ^
+SyntaxError: keyword can't be an expression
+
+
+In [61]: Ninjas.objects.get(id=5).dojo.name                                                                                                                                                                                                                    
+Out[61]: 'SJC'
+
+In [62]: Ninjas.objects.filter(dojo=Dojos.objects.get(id=1))                                                                                                                                                                                                   
+---------------------------------------------------------------------------
+DoesNotExist                              Traceback (most recent call last)
+<ipython-input-62-2a142f07ec71> in <module>
+----> 1 Ninjas.objects.filter(dojo=Dojos.objects.get(id=1))
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/Documents/codingDojo/python_stack/my_environment/djangoEnv/lib/python3.7/site-packages/django/db/models/query.py in get(self, *args, **kwargs)
+    415             raise self.model.DoesNotExist(
+    416                 "%s matching query does not exist." %
+--> 417                 self.model._meta.object_name
+    418             )
+    419         raise self.model.MultipleObjectsReturned(
+
+DoesNotExist: Dojos matching query does not exist.
+
+In [63]: Ninjas.objects.filter(dojo=Dojos.objects.get(id=4))                                                                                                                                                                                                   
+Out[63]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [64]: Ninjas.objects.filter(dojo=Dojos.objects.get(id=4)).first_name                                                                                                                                                                                        
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-64-99d8f9537427> in <module>
+----> 1 Ninjas.objects.filter(dojo=Dojos.objects.get(id=4)).first_name
+
+AttributeError: 'QuerySet' object has no attribute 'first_name'
+
+In [65]: Ninjas.objects.filter(dojo=Dojos.objects.get(id=4))                                                                                                                                                                                                   
+Out[65]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [66]: Ninjas.objects.filter.first_name(dojo=Dojos.objects.get(id=4))                                                                                                                                                                                        
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-66-e4042561b784> in <module>
+----> 1 Ninjas.objects.filter.first_name(dojo=Dojos.objects.get(id=4))
+
+AttributeError: 'function' object has no attribute 'first_name'
+
+In [67]: Ninjas.objects.filter.(dojo=Dojos.objects.get(id=4))                                                                                                                                                                                                  
+  File "<ipython-input-67-0a4f8330c1e7>", line 1
+    Ninjas.objects.filter.(dojo=Dojos.objects.get(id=4))
+                          ^
+SyntaxError: invalid syntax
+
+
+In [68]: for ninja in Ninjas.objects.filter.(dojo=Dojos.objects.get(id=4))                                                                                                                                                                                     
+  File "<ipython-input-68-89038bae63d2>", line 1
+    for ninja in Ninjas.objects.filter.(dojo=Dojos.objects.get(id=4))
+                                       ^
+SyntaxError: invalid syntax
+
+
+In [69]: for ninja in Ninjas.objects.filter.(dojo=Dojos.objects.get(id=4)): 
+    ...:     print(ninja.first_name)                                                                                                                                                                                                                           
+  File "<ipython-input-69-c58d7660b9c7>", line 1
+    for ninja in Ninjas.objects.filter.(dojo=Dojos.objects.get(id=4)):
+                                       ^
+SyntaxError: invalid syntax
+
+
+In [70]: for ninja in Ninjas.objects.filter(dojo=Dojos.objects.get(id=4)): 
+    ...:     print(ninja.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+Greg
+Eric
+Randy
+
+In [71]: for ninja in Ninjas.objects.filter(dojo=Dojos.objects.get(id=5)): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Ashley
+Kyle
+Hello
+
+In [72]: for ninja in Ninjas.objects.filter(dojo=Dojos.objects.get(id=6)): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Guy
+Chris
+Ariana
+
+In [73]: for ninja in Ninjas.objects.filter(dojo=Dojos.objects.get(id=6)): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:      
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Guy CrazyTown
+Chris CrazyTown
+Ariana CrazyTown
+
+In [74]: for ninja in Ninjas.objects.filter(dojo=Dojos.objects.get(id=5)): 
+    ...:     print(ninja.first_name, ninja.dojo.name) 
+    ...:                                                                                                                                                                                                                                                       
+Ashley Seattle
+Kyle Seattle
+Hello Seattle
+
+In [75]: Ninjas.objects.filter(dojo=Dojos.objects.get(name="SJC"))                                                                                                                                                                                             
+Out[75]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [76]: Ninjas.objects.filter(dojo=Dojos.objects.get(id=4))                                                                                                                                                                                                   
+Out[76]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [77]: Dojos.objects.get(name="SJC")                                                                                                                                                                                                                         
+Out[77]: <Dojos: Dojos object (4)>
+
+In [78]: Dojos.objects.get(name="SJC").first_name                                                                                                                                                                                                              
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-78-ca66038bf7c6> in <module>
+----> 1 Dojos.objects.get(name="SJC").first_name
+
+AttributeError: 'Dojos' object has no attribute 'first_name'
+
+In [79]: for ninja in Dojos.objects.get(name="SJC"): 
+    ...:     print(ninjas.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-79-70bc0fb2c38d> in <module>
+----> 1 for ninja in Dojos.objects.get(name="SJC"):
+      2     print(ninjas.first_name)
+      3 
+
+TypeError: 'Dojos' object is not iterable
+
+In [80]: for ninja in Dojos.objects.get(name="SJC"): 
+    ...:     print(ninja.first_name) 
+    ...:     )                                                                                                                                                                                                                                                 
+  File "<ipython-input-80-119eb276d37a>", line 3
+    )
+    ^
+SyntaxError: invalid syntax
+
+
+In [81]: for ninjas in Dojos.objects.get(name="SJC"): 
+    ...:     print(ninjas.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-81-1d75deecb25b> in <module>
+----> 1 for ninjas in Dojos.objects.get(name="SJC"):
+      2     print(ninjas.first_name)
+      3 
+
+TypeError: 'Dojos' object is not iterable
+
+In [82]: for ninjas in Dojos.objects.filter(name="SJC"): 
+    ...:     print(ninjas.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-82-6cc67b4fdd99> in <module>
+      1 for ninjas in Dojos.objects.filter(name="SJC"):
+----> 2     print(ninjas.first_name)
+      3 
+      4 
+
+AttributeError: 'Dojos' object has no attribute 'first_name'
+
+In [83]: for ninjas in Dojos.objects.filter(name="SJC"): 
+    ...:     print(Dojos.ninjas.first_name) 
+    ...:     )                                                                                                                                                                                                                                                 
+  File "<ipython-input-83-4e3c757594eb>", line 3
+    )
+    ^
+SyntaxError: invalid syntax
+
+
+In [84]: for ninjas in Dojos.objects.filter(name="SJC"): 
+    ...:     print(Dojos.ninjas.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-84-b0c71da05826> in <module>
+      1 for ninjas in Dojos.objects.filter(name="SJC"):
+----> 2     print(Dojos.ninjas.first_name)
+      3 
+
+AttributeError: 'ReverseManyToOneDescriptor' object has no attribute 'first_name'
+
+In [85]: Dojos.objects.filter(name="SJC")                                                                                                                                                                                                                      
+Out[85]: <QuerySet [<Dojos: Dojos object (4)>]>
+
+In [86]: Dojos.objects.filter(name="SJC")                                                                                                                                                                                                                      
+Out[86]: <QuerySet [<Dojos: Dojos object (4)>]>
+
+In [87]: SJC.ninjas.all()                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-87-8f11495ac414> in <module>
+----> 1 SJC.ninjas.all()
+
+NameError: name 'SJC' is not defined
+
+In [88]: Dojos.objects.get(name="SJC")                                                                                                                                                                                                                         
+Out[88]: <Dojos: Dojos object (4)>
+
+In [89]: Dojos.objects.get(name="SJC").ninjas.all()                                                                                                                                                                                                            
+Out[89]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [90]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+    ...:     print(first_name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-90-95d113cd9009> in <module>
+      1 for ninja in Dojos.objects.get(name="SJC").ninjas.all():
+----> 2     print(first_name)
+      3 
+
+NameError: name 'first_name' is not defined
+
+In [91]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+    ...:     print(ninjas.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-91-8556ede1608b> in <module>
+      1 for ninja in Dojos.objects.get(name="SJC").ninjas.all():
+----> 2     print(ninjas.first_name)
+      3 
+      4 
+
+AttributeError: 'Dojos' object has no attribute 'first_name'
+
+In [92]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+    ...:     print(first_name) 
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-92-b6bc2d55183b> in <module>
+      1 for ninja in Dojos.objects.get(name="SJC").ninjas.all():
+----> 2     print(first_name)
+      3 
+      4 
+      5 
+
+NameError: name 'first_name' is not defined
+
+In [93]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+    ...:     print(ninjas.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-93-b008befa2987> in <module>
+      1 for ninja in Dojos.objects.get(name="SJC").ninjas.all():
+----> 2     print(ninjas.first_name)
+      3 
+
+AttributeError: 'Dojos' object has no attribute 'first_name'
+
+In [94]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Greg
+Eric
+Randy
+
+In [95]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Greg
+Eric
+Randy
+
+In [96]: for ninja in Dojos.objects.get(name="Seattle").ninjas.all(): 
+    ...:     print(ninja.first_name) 
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+Ashley
+Kyle
+Hello
+
+In [97]: for dojo in Ninjas.objects.all(): 
+    ...:     print(dojo.name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-97-a703910bc226> in <module>
+      1 for dojo in Ninjas.objects.all():
+----> 2     print(dojo.name)
+      3 
+
+AttributeError: 'Ninjas' object has no attribute 'name'
+
+In [98]: for ninja in Ninjas.objects.all(): 
+    ...:     print(ninja.dojo.name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+SJC
+Seattle
+CrazyTown
+SJC
+SJC
+Seattle
+Seattle
+CrazyTown
+CrazyTown
+
+In [99]: for ninja in Ninjas.objects.all().filter(ninja.dojo.name ="SJC"): 
+    ...:     print(ninja.dojo.name)                                                                                                                                                                                                                            
+  File "<ipython-input-99-cd74d0285ec5>", line 1
+    for ninja in Ninjas.objects.all().filter(ninja.dojo.name ="SJC"):
+                                            ^
+SyntaxError: keyword can't be an expression
+
+
+In [100]:                                                                                                                                                                                                                                                      
+
+In [100]: for ninja in Ninjas.objects.all().dojo.filter(name="SJC"): 
+     ...:     print(ninja.dojo.name) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-100-eeeed56e9088> in <module>
+----> 1 for ninja in Ninjas.objects.all().dojo.filter(name="SJC"):
+      2     print(ninja.dojo.name)
+      3 
+
+AttributeError: 'QuerySet' object has no attribute 'dojo'
+
+In [101]: for ninja in Ninjas.objects.all().filter(ninja.dojo.name ="SJC"): 
+     ...:     print(ninja.dojo.name)                                                                                                                                                                                                                           
+  File "<ipython-input-101-cd74d0285ec5>", line 1
+    for ninja in Ninjas.objects.all().filter(ninja.dojo.name ="SJC"):
+                                            ^
+SyntaxError: keyword can't be an expression
+
+
+In [102]: Dojos.objects.filter(name="SJC")                                                                                                                                                                                                                     
+Out[102]: <QuerySet [<Dojos: Dojos object (4)>]>
+
+In [103]: Dojos.objects.get(name="SJC").ninjas.first_name                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-103-8a729e179908> in <module>
+----> 1 Dojos.objects.get(name="SJC").ninjas.first_name
+
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+
+In [104]: Dojos.objects.get(name="SJC").ninjas                                                                                                                                                                                                                 
+Out[104]: <django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager at 0x109c29ed0>
+
+In [105]: Dojos.objects.get(name="SJC").ninjas                                                                                                                                                                                                                 
+Out[105]: <django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager at 0x10a177650>
+
+In [106]:                                                                                                                                                                                                                                                      
+
+In [106]: Dojos.objects.get(id=4).ninjas                                                                                                                                                                                                                       
+Out[106]: <django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager at 0x10bbc6110>
+
+In [107]: Dojos.objects.get(id=4).ninjas.all()                                                                                                                                                                                                                 
+Out[107]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [108]: for dojo in Dojos.objects.get(id=4).ninjas.all()                                                                                                                                                                                                     
+  File "<ipython-input-108-772bac2d1c78>", line 1
+    for dojo in Dojos.objects.get(id=4).ninjas.all()
+                                                    ^
+SyntaxError: invalid syntax
+
+
+In [109]: for dojo in Dojos.objects.get(id=4).ninjas.all(): 
+     ...:     print(dojo.ninjas) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-109-1c789dfa1550> in <module>
+      1 for dojo in Dojos.objects.get(id=4).ninjas.all():
+----> 2     print(dojo.ninjas)
+      3 
+
+AttributeError: 'Ninjas' object has no attribute 'ninjas'
+
+In [110]: for dojo in Dojos.objects.get(id=4).ninjas.all(): 
+     ...:     print(dojo) 
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Ninjas object (1)
+Ninjas object (4)
+Ninjas object (5)
+
+In [111]: for dojo in Dojos.objects.get(id=4).ninjas.all(): 
+     ...:     print(dojo.ninjas.first_name) 
+     ...:      
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-111-74726b95749d> in <module>
+      1 for dojo in Dojos.objects.get(id=4).ninjas.all():
+----> 2     print(dojo.ninjas.first_name)
+      3 
+      4 
+      5 
+
+AttributeError: 'Ninjas' object has no attribute 'ninjas'
+
+In [112]: for dojo in Dojos.objects.get(id=4).ninjas.all(): 
+     ...:     print(first_name) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-112-c474a11ceaec> in <module>
+      1 for dojo in Dojos.objects.get(id=4).ninjas.all():
+----> 2     print(first_name)
+      3 
+
+NameError: name 'first_name' is not defined
+
+In [113]: for dojo in Dojos.objects.get(id=4).ninjas.all(): 
+     ...:     print(dojo.first_name) 
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [114]: for ninja in Dojos.objects.get(id=4).ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [115]: for ninja in Dojos.objects.get(name="SJC).ninjas.all(): 
+     ...:     print(ninja.first_name)                                                                                                                                                                                                                          
+  File "<ipython-input-115-fa041b449cd7>", line 1
+    for ninja in Dojos.objects.get(name="SJC).ninjas.all():
+                                                           ^
+SyntaxError: EOL while scanning string literal
+
+
+In [116]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [117]: for ninja in Dojos.objects.filter(name="SJC").ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-117-0baf9616bb44> in <module>
+----> 1 for ninja in Dojos.objects.filter(name="SJC").ninjas.all():
+      2     print(ninja.first_name)
+      3 
+
+AttributeError: 'QuerySet' object has no attribute 'ninjas'
+
+In [118]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [119]: SJC = Dojos.objects.filter(name="SJC)                                                                                                                                                                                                                
+  File "<ipython-input-119-6ffc06d41b1b>", line 1
+    SJC = Dojos.objects.filter(name="SJC)
+                                         ^
+SyntaxError: EOL while scanning string literal
+
+
+In [120]: SJC = Dojos.objects.filter(name="SJC")                                                                                                                                                                                                               
+
+In [121]: Dojos.objects.filter(name="SJC")                                                                                                                                                                                                                     
+Out[121]: <QuerySet [<Dojos: Dojos object (4)>]>
+
+In [122]: for ninja in SJC.ninjas.all()                                                                                                                                                                                                                        
+  File "<ipython-input-122-23992167ebcf>", line 1
+    for ninja in SJC.ninjas.all()
+                                 ^
+SyntaxError: invalid syntax
+
+
+In [123]: for ninja in SJC.ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-123-bd9b54d2ce0b> in <module>
+----> 1 for ninja in SJC.ninjas.all():
+      2     print(ninja.first_name)
+      3 
+
+AttributeError: 'QuerySet' object has no attribute 'ninjas'
+
+In [124]: for ninja in SJC[0].ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [125]: for i in range (len(SJC)): 
+     ...:     for ninja in SJC[i].ninja.all(): 
+     ...:         print(ninja.first_name) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-125-b08c62b86ef9> in <module>
+      1 for i in range (len(SJC)):
+----> 2     for ninja in SJC[i].ninja.all():
+      3         print(ninja.first_name)
+      4 
+
+AttributeError: 'Dojos' object has no attribute 'ninja'
+
+In [126]: for i in range (len(SJC)): 
+     ...:     for ninja in SJC[i].ninjas.all(): 
+     ...:         print(ninja.first_name) 
+     ...:          
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [127]: for i in range (len(SJC)): 
+     ...:     for ninja in SJC[i].ninjas.all(): 
+     ...:         print(ninja.first_name) 
+     ...:          
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [128]:                                                                                                                                                                                                                                                      
+
+In [128]: for i in range (len(SJC)): 
+     ...:     for ninja in SJC[i].ninjas.all(): 
+     ...:         print(ninja.first_name) 
+     ...:          
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [129]: Dojos.objects.get(name="SJC").ninjas.all()                                                                                                                                                                                                           
+Out[129]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [130]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+     ...:     print(ninja) 
+     ...:                                                                                                                                                                                                                                                      
+Ninjas object (1)
+Ninjas object (4)
+Ninjas object (5)
+
+In [131]: for ninja in Dojos.objects.get(name="SJC").ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [132]: for ninja in Dojos.objects.get(name="Seattle").ninjas.all(): 
+     ...:     print(ninja.first_name) 
+     ...:      
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Ashley
+Kyle
+Hello
+
+In [133]: Ninjas.objects.all()                                                                                                                                                                                                                                 
+Out[133]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (2)>, <Ninjas: Ninjas object (3)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>, <Ninjas: Ninjas object (6)>, <Ninjas: Ninjas object (7)>, <Ninjas: Ninjas object (8)>, <Ninjas: Ninjas object (9)>]>
+
+In [134]: Ninjas.objects.filter(dojo=Dojos.objects.get(name="SJC"))                                                                                                                                                                                            
+Out[134]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [135]: for ninja in Ninjas.objects.filter(dojo=Dojos.objects.get(name="SJC")): 
+     ...:     print(ninja) 
+     ...:                                                                                                                                                                                                                                                      
+Ninjas object (1)
+Ninjas object (4)
+Ninjas object (5)
+
+In [136]: for ninja in Ninjas.objects.filter(dojo=Dojos.objects.get(name="SJC")): 
+     ...:     print(ninja.first_name) 
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Greg
+Eric
+Randy
+
+In [137]: Ninjas.objects.all()                                                                                                                                                                                                                                 
+Out[137]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (2)>, <Ninjas: Ninjas object (3)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>, <Ninjas: Ninjas object (6)>, <Ninjas: Ninjas object (7)>, <Ninjas: Ninjas object (8)>, <Ninjas: Ninjas object (9)>]>
+
+In [138]:                                                                                                                                                                                                                                                      
+
+In [138]:                                                                                                                                                                                                                                                      
+
+In [138]: Ninjas.objects.get(id=9).first_name                                                                                                                                                                                                                  
+Out[138]: 'Ariana'
+
+In [139]: Ninjas.objects.get(id=9)                                                                                                                                                                                                                             
+Out[139]: <Ninjas: Ninjas object (9)>
+
+In [140]: for val in Ninjas.objects.get(id=9:)                                                                                                                                                                                                                 
+  File "<ipython-input-140-3355c1a3b546>", line 1
+    for val in Ninjas.objects.get(id=9:)
+                                      ^
+SyntaxError: invalid syntax
+
+
+In [141]: for val in Ninjas.objects.get(id=9): 
+     ...:     print(val) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-141-5ed470da40ff> in <module>
+----> 1 for val in Ninjas.objects.get(id=9):
+      2     print(val)
+      3 
+
+TypeError: 'Ninjas' object is not iterable
+
+In [142]: for key in Ninjas.objects.get(id=9): 
+     ...:     print(val) 
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-142-561a91c18ce1> in <module>
+----> 1 for key in Ninjas.objects.get(id=9):
+      2     print(val)
+      3 
+
+TypeError: 'Ninjas' object is not iterable
+
+In [143]: for key in Ninjas.objects.get(id=9): 
+     ...:     print(key) 
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-143-0c7cb0443c37> in <module>
+----> 1 for key in Ninjas.objects.get(id=9):
+      2     print(key)
+      3 
+      4 
+
+TypeError: 'Ninjas' object is not iterable
+
+In [144]: Ninjas.objects.get(id=9) 
+     ...:  
+     ...:      
+     ...:                                                                                                                                                                                                                                                      
+Out[144]: <Ninjas: Ninjas object (9)>
+
+In [145]: Ninjas.objects.get(id=9)                                                                                                                                                                                                                             
+Out[145]: <Ninjas: Ninjas object (9)>
+
+In [146]: exit                                                                                                                                                                                                                                                 
+(djangoEnv) gchance@gregsMac dojo_ninjas_proj % python manage.py makemigrations
+You are trying to add a non-nullable field 'desc' to dojos without a default; we can't do that (the database needs something to populate existing rows).
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 2) Quit, and let me add a default in models.py
+Select an option: 2
+(djangoEnv) gchance@gregsMac dojo_ninjas_proj % python manage.py makemigrations
+Migrations for 'dojo_ninjas_app':
+  dojo_ninjas_app/migrations/0002_dojos_desc.py
+    - Add field desc to dojos
+(djangoEnv) gchance@gregsMac dojo_ninjas_proj % python manage.py migrate       
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas_app, sessions
+Running migrations:
+  Applying dojo_ninjas_app.0002_dojos_desc... OK
+(djangoEnv) gchance@gregsMac dojo_ninjas_proj % python manage.py shell         
+Python 3.7.6 (default, Dec 30 2019, 19:38:26) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.12.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from dojo_ninjas_app.models import *                                                                                                                                                                                                                   
+
+In [2]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo) 
+   ...:                                                                                                                                                                                                                                                        
+Dojos object (4)
+Dojos object (5)
+Dojos object (6)
+
+In [3]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo.desc) 
+   ...:      
+   ...:                                                                                                                                                                                                                                                        
+None
+None
+None
+
+In [4]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo.name, dojo.desc) 
+   ...:                                                                                                                                                                                                                                                        
+SJC None
+Seattle None
+CrazyTown None
+
+In [5]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo.name,"," dojo.desc) 
+   ...:  
+   ...:                                                                                                                                                                                                                                                        
+  File "<ipython-input-5-e418dd222b22>", line 2
+    print(dojo.name,"," dojo.desc)
+                           ^
+SyntaxError: invalid syntax
+
+
+In [6]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo.name, ",", dojo.desc) 
+   ...:      
+   ...:  
+   ...:                                                                                                                                                                                                                                                        
+SJC , None
+Seattle , None
+CrazyTown , None
+
+In [7]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo.name,",", dojo.desc) 
+   ...:                                                                                                                                                                                                                                                        
+SJC , None
+Seattle , None
+CrazyTown , None
+
+In [8]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo.name,",",dojo.desc) 
+   ...:      
+   ...:                                                                                                                                                                                                                                                        
+SJC , None
+Seattle , None
+CrazyTown , None
+
+In [9]: for dojo in Dojos.objects.all(): 
+   ...:     print(dojo.name+","+dojo.desc) 
+   ...:      
+   ...:      
+   ...:                                                                                                                                                                                                                                                        
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-9-0ad52732b5ab> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+","+dojo.desc)
+      3 
+      4 
+      5 
+
+TypeError: can only concatenate str (not "NoneType") to str
+
+In [10]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+","+dojo.ninjas) 
+    ...:      
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-10-6cb89ec0029a> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+","+dojo.ninjas)
+      3 
+      4 
+      5 
+
+TypeError: can only concatenate str (not "RelatedManager") to str
+
+In [11]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+","+dojo.ninjas.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-11-56bc58f20055> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+","+dojo.ninjas.first_name)
+      3 
+
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+
+In [12]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+","+dojo.ninjas.first_name) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-12-a4b798530a5c> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+","+dojo.ninjas.first_name)
+      3 
+      4 
+
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+
+In [13]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+","+dojo.ninjas.first_name) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-13-56bc58f20055> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+","+dojo.ninjas.first_name)
+      3 
+
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+
+In [14]: Dojos.objects.get(id=4).ninjas.first_name                                                                                                                                                                                                             
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-14-614d1732515f> in <module>
+----> 1 Dojos.objects.get(id=4).ninjas.first_name
+
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+
+In [15]: Dojos.objects.get(id=4).ninjas.all()                                                                                                                                                                                                                  
+Out[15]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [16]: Dojos.objects.get(id=4).ninjas.all()                                                                                                                                                                                                                  
+Out[16]: <QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (4)>, <Ninjas: Ninjas object (5)>]>
+
+In [17]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+","+dojo.id) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-17-fcf5d622e199> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+","+dojo.id)
+      3 
+      4 
+
+TypeError: can only concatenate str (not "int") to str
+
+In [18]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+","+dojo.str(id)) 
+    ...:      
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-18-65f2ab13a8c8> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+","+dojo.str(id))
+      3 
+      4 
+      5 
+
+AttributeError: 'Dojos' object has no attribute 'str'
+
+In [19]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+","+dojo.city) 
+    ...:                                                                                                                                                                                                                                                       
+SJC,San Jose
+Seattle,Seattle
+CrazyTown,Orlando
+
+In [20]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+", "+dojo.str(id)) 
+    ...:                                                                                                                                                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-20-7ed16531044f> in <module>
+      1 for dojo in Dojos.objects.all():
+----> 2     print(dojo.name+", "+dojo.str(id))
+      3 
+
+AttributeError: 'Dojos' object has no attribute 'str'
+
+In [21]: for dojo in Dojos.objects.all(): 
+    ...:     print(dojo.name+", "+dojo.city) 
+    ...:      
+    ...:                                                                                                                                                                                                                                                       
+SJC, San Jose
+Seattle, Seattle
+CrazyTown, Orlando
+
+In [22]: Dojos.objects.create(name="Flautas",city="Fartville",state="ZZ",desc="This is cool")                                                                                                                                                                  
+Out[22]: <Dojos: Dojos object (7)>
+
+In [23]: Dojos.objects.get(id=7)                                                                                                                                                                                                                               
+Out[23]: <Dojos: Dojos object (7)>
+
+In [24]: Dojos.objects.last()                                                                                                                                                                                                                                  
+Out[24]: <Dojos: Dojos object (7)>
+
+In [25]: Dojos.objects.last().desc                                                                                                                                                                                                                             
+Out[25]: 'This is cool'
+
+In [26]:                                                                                                                                                                                                                                                       

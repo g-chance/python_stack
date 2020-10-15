@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance iNdex</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- <div class="inner1">
+        </div> -->
+        <div class="inner2">
+            <form action="/rd/reg" class="leftinner2" method="POST">
+                {% csrf_token %}
+                <h1>Register:</h1>
+                {% for message in messages %}
+                    {% if 'first_name' in message.tags %}
+                        <p {% if message.tags %} class='{{ message.tags }}' {% endif %}>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name">
+                {% for message in messages %}
+                    {% if 'last_name' in message.tags %}
+                        <p {% if message.tags %} class='{{ message.tags }}' {% endif %}>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name">
+                {% for message in messages %}
+                    {% if 'email' in message.tags %}
+                        <p {% if message.tags %} class='{{ message.tags }}' {% endif %}>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+                <label for="email">Emails:</label>
+                <input type="text" name="email">
+                <label for="email">Birthday:</label>
+                <input type="date" name="birthday">
+                <label for="password">Password:</label>
+                <input type="password" name="password">
+                <label for="confirm">Confirm Password:</label>
+                <input type="password" name="confirm">
+                <input class="test" type="submit">
+            </form>
+
+            <form action="rd/login" class="rightinner2" method="POST">
+                {% csrf_token %}
+                <h1>Login:</h1>
+                <label for="email">Emails:</label>
+                <input type="text" name="email">
+                <label for="password">Password:</label>
+                <input type="password" name="password">
+                <input class="test" type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gChance Semi Restful TV Shows</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container shows_con">
+        <h1>All Shows</h1>
+        <table class="shows_table">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Network</th>
+                <th>Release Date</th>
+                <th>Action</th>
+            </tr>
+            {% for show in shows %}
+            <tr>
+                <th>{{show.id}}</th>
+                <th>{{show.title}}</th>
+                <th>{{show.network}}</th>
+                <th>{{show.release_date}}</th>
+                <th>
+                    <a class="shows_table_link" href="/shows/{{show.id}}">Show</a>
+                    <span class="shows_table_link"> | </span>
+                    <a class="shows_table_link" href="/shows/{{show.id}}/edit">Edit</a>
+                    <span class="shows_table_link"> | </span>
+                    <a class="shows_table_link" href="/delete_show/{{show.id}}">Delete</a>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+        <a class="shows_link" href="/shows/new">Add A Show</a>
+    </div>
+</body>
+</html>

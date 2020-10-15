@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        
+            <div>
+                <form class="center" action="/home">
+                    <input type="submit" value="Home">
+                </form>
+                <h2>{{book.title}}</h2>
+                <h4>ID: {{book.id}}</h4>
+                <h4 class="desc">Description:</h4>
+                <p class="desc2">{{book.desc}} Stuff and Things</p>
+                <h4>Authors:</h4>
+                <ul>
+                    {% for author in book.authors.all %}
+                    <li> {{author.first_name}} {{author.last_name}} </li>
+                    {% endfor %}
+                </ul>
+                <form action="/add_author/{{book.id}}" method="POST">
+                    {% csrf_token %}
+                    <select name="selectauth" id="">
+                        {% for author in authors %}
+                        <option value="{{author.id}}">{{author.first_name}} {{author.last_name}}</option>
+                        {% endfor %}
+                        <input type="submit" value="Add">
+                    </select>
+                </form>
+                
+            </div>
+
+    </div>
+</body>
+</html>

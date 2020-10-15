@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <h1>Welcome, {{user.first_name}}!</h1>
+            <div>
+                <a href="/rd/logout">Logout</a>
+            </div>
+        </div>
+        <div class="inner1">
+            <div class="col left">
+                <h2>Add Favorite Book:</h2>
+                <form action="/rd/add_book" method="post">
+                    {% csrf_token %}
+                    {% for message in messages %}
+                        {% if 'title' in message.tags %}
+                        <p class="{{message.tags}}">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <label for="title">Title:</label>
+                    <input type="text" name="title">
+                    {% for message in messages %}
+                        {% if 'description' in message.tags %}
+                        <p class="{{message.tags}}">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <label for="description">Description:</label>
+                    <input type="text" name="description">
+                    <input class="submit" type="submit" value="Add">
+                </form>
+            </div>
+            <div class="col right">
+                <h2>All  Books:</h2>
+                {% for book in books %}
+                <div class="row">
+                    <a href="/book_info/{{book.id}}">{{book.title}}</a>
+                    <p>(added by {{book.added_user.first_name}} {{book.added_user.last_name}})</p>
+                    {% if book in liked_books %}
+                    <p>You like this book</p>
+                    {% else %}
+                    <a href="/rd/add_favorite/{{book.id}}">Add to favorites</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

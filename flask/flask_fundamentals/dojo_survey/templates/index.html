@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="stuff">
+    <title>gChance Dojo Survey</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <form action="/process" method="POST">
+        <label for="name"></label>
+        Name<input type="text" name="name">
+        <label for="email"></label>
+        Email:<input type="text" name="email">
+        <label for="yes"></label>
+        Yes<input type="radio" name="poop" value="yes">
+        <label for="no"></label>
+        No<input type="radio" name="poop" value="no">
+        <input type="submit">
+        <label for="colors"></label>
+        Red<input type="checkbox" name="colors" value="red">
+        Green<input type="checkbox" name="colors" value="green">
+        Purple<input type="checkbox" name="colors" value="purple">
+
+        
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="innercon1">
+            
+                
+                <form  class="left_con" action="/rd/reg" method="POST">
+                    <h1>Registration:</h1>
+                    {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name">
+                    <label for="first_name">Last Name:</label>
+                    <input type="text" name="last_name">
+                    <label for="first_name">Email:</label>
+                    <input type="text" name="email">
+                    <label for="first_name">Password:</label>
+                    <input type="password" name="password">
+                    <label for="first_name">Confirm Password:</label>
+                    <input type="password" name="confirm">
+                    <input type="submit">
+                </form>
+            
+            
+            
+                
+                <form  class="right_con" action="/rd/login" method="POST">
+                    <h1>Login:</h1>
+                    {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <label for="first_name">Email:</label>
+                    <input type="text" name="email">
+                    <label for="first_name">Password:</label>
+                    <input type="text" name="password">
+                    <input type="submit">
+                </form>
+                
+            <div class= "testme">
+                <table>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.password}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
